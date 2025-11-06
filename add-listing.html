@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Listing - Reloop</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-green: #4CAF50;
+            --primary-green-dark: #45a049;
+            --primary-green-light: #66BB6A;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --text-dark: #333333;
+            --text-muted: #6c757d;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 15px rgba(0, 0, 0, 0.15);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--bg-white) !important;
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand::before {
+            content: "♻️";
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-green) !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 3px;
+            background-color: var(--primary-green);
+            border-radius: 2px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: var(--bg-white);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-green-dark);
+            border-color: var(--primary-green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: var(--bg-white);
+            transform: translateY(-2px);
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            overflow: hidden;
+            background-color: var(--bg-white);
+        }
+
+        .card-title {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* Form Sections */
+        .card-body h5 {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        /* Form Controls */
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid #dee2e6;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Input Group */
+        .input-group-text {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            border: 2px solid var(--primary-green);
+            font-weight: 600;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Form Text */
+        .form-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Image Previews */
+        #image-previews img {
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            object-fit: cover;
+            height: 120px;
+            width: 100%;
+        }
+
+        #image-previews img:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .alert-info {
+            background-color: #e8f5e9;
+            color: var(--text-dark);
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .alert-info .alert-heading {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: var(--text-dark);
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .alert-danger {
+            background-color: #ffebee;
+            color: var(--text-dark);
+            border-left: 4px solid #dc3545;
+        }
+
+        /* Loading Spinner */
+        #loading-spinner {
+            z-index: 9999;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+        }
+
+        .spinner-border.text-primary {
+            color: var(--primary-green) !important;
+        }
+
+        /* Alert Containers */
+        #error-container,
+        #success-container {
+            z-index: 9998;
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        /* Select Dropdown */
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%234CAF50' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        }
+
+        /* File Input */
+        input[type="file"] {
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-right: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background-color: var(--primary-green-dark);
+        }
+
+        /* Price Container */
+        #price-container {
+            transition: var(--transition);
+        }
+
+        /* Classification Result */
+        #classification-result {
+            min-height: 50px;
+        }
+
+        /* Row Spacing */
+        .row {
+            margin-bottom: 0;
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .btn-primary {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            #image-previews img {
+                height: 100px;
+            }
+        }
+
+        /* Smooth Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container Spacing */
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Form Validation Feedback */
+        .form-control:invalid:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+        .form-control:valid:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        /* Submit Button */
+        button[type="submit"] {
+            margin-top: 1rem;
+        }
+
+        /* Typography */
+        h2 {
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        h5 {
+            font-size: 1.25rem;
+        }
+
+        p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Text Muted */
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Link Styles */
+        a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-green-dark);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                Reloop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketplace.html">Marketplace</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" data-auth-required>
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item" data-profile-link>
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item d-none" data-auth-required>
+                        <button class="btn btn-outline-primary" onclick="logout()">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Add Listing Form -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="card-title mb-4">Add New Listing</h2>
+                        
+                        <form id="listing-form">
+                            <!-- Basic Info -->
+                            <div class="mb-4">
+                                <h5>Basic Information</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="title" 
+                                           name="title" 
+                                           placeholder="Enter a descriptive title"
+                                           required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" 
+                                              id="description" 
+                                              name="description" 
+                                              rows="4" 
+                                              placeholder="Describe the material, its condition, and any other relevant details"
+                                              required></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="category" class="form-label">Category</label>
+                                        <select class="form-select" 
+                                                id="category" 
+                                                name="category" 
+                                                required>
+                                            <option value="">Select Category</option>
+                                            <option value="Plastic">Plastic</option>
+                                            <option value="Metal">Metal</option>
+                                            <option value="Wood">Wood</option>
+                                            <option value="Fabric">Fabric</option>
+                                            <option value="Paper">Paper</option>
+                                            <option value="Glass">Glass</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="subtype" class="form-label">Subtype</label>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="subtype" 
+                                               name="subtype" 
+                                               placeholder="e.g., PET bottles, aluminum cans"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Material Details -->
+                            <div class="mb-4">
+                                <h5>Material Details</h5>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="quantity" class="form-label">Quantity</label>
+                                        <input type="number" 
+                                               class="form-control" 
+                                               id="quantity" 
+                                               name="quantity" 
+                                               min="1" 
+                                               placeholder="Enter quantity"
+                                               required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="unit" class="form-label">Unit</label>
+                                        <select class="form-select" 
+                                                id="unit" 
+                                                name="unit" 
+                                                required>
+                                            <option value="">Select Unit</option>
+                                            <option value="kg">Kilograms (kg)</option>
+                                            <option value="pieces">Pieces</option>
+                                            <option value="meters">Meters</option>
+                                            <option value="liters">Liters</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="condition" class="form-label">Condition</label>
+                                        <select class="form-select" 
+                                                id="condition" 
+                                                name="condition" 
+                                                required>
+                                            <option value="">Select Condition</option>
+                                            <option value="New">New</option>
+                                            <option value="Like New">Like New</option>
+                                            <option value="Used">Used</option>
+                                            <option value="For Processing">For Processing</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="type" class="form-label">Listing Type</label>
+                                        <select class="form-select" 
+                                                id="type" 
+                                                name="type" 
+                                                required>
+                                            <option value="">Select Type</option>
+                                            <option value="Sell">For Sale</option>
+                                            <option value="Donate">For Donation</option>
+                                            <option value="Exchange">For Exchange</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3" id="price-container" style="display: none;">
+                                    <label for="price" class="form-label">Price per Unit</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" 
+                                               class="form-control" 
+                                               id="price" 
+                                               name="price" 
+                                               step="0.01" 
+                                               min="0"
+                                               placeholder="0.00">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="mb-4">
+                                <h5>Location</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="city" 
+                                           name="city" 
+                                           placeholder="Enter your city"
+                                           required>
+                                </div>
+                            </div>
+
+                            <!-- Images -->
+                            <div class="mb-4">
+                                <h5>Images</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="images" class="form-label">
+                                        Upload Images (max 5)
+                                    </label>
+                                    <input type="file" 
+                                           class="form-control" 
+                                           id="images" 
+                                           name="images" 
+                                           accept="image/*" 
+                                           multiple 
+                                           required>
+                                    <div class="form-text">
+                                        Maximum 5 images, each less than 5MB. 
+                                        Supported formats: JPG, PNG
+                                    </div>
+                                </div>
+
+                                <div id="image-previews" class="row g-2"></div>
+                            </div>
+
+                            <!-- AI Classification -->
+                            <div class="mb-4">
+                                <h5>Material Classification</h5>
+                                <p class="text-muted">
+                                    Our AI will analyze your images to help categorize the material.
+                                </p>
+                                <div id="classification-result"></div>
+                            </div>
+
+                            <!-- Tags -->
+                            <div class="mb-4">
+                                <h5>Tags</h5>
+                                <div class="mb-3">
+                                    <label for="tags" class="form-label">
+                                        Add Tags (comma separated)
+                                    </label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="tags" 
+                                           name="tags" 
+                                           placeholder="e.g., recycled, industrial, raw">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Create Listing
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="position-fixed top-50 start-50 translate-middle d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Alert Containers -->
+    <div id="error-container" class="alert alert-danger position-fixed bottom-0 end-0 m-3 d-none" role="alert"></div>
+    <div id="success-container" class="alert alert-success position-fixed bottom-0 end-0 m-3 d-none" role="alert"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- App Logic -->
+    <script type="module">
+        import app from '/assets/js/app.js';
+        import { getCurrentUser, logout } from '/assets/js/auth.js';
+        import { createListing } from '/assets/js/db.js';
+        import { uploadMultipleFiles, validateFile, resizeImage } from '/assets/js/storage.js';
+        import { classifyImage } from '/assets/js/classifier-mock.js';
+
+        // Make logout function available globally
+        window.logout = logout;
+
+        // Helper functions
+        function showLoading() {
+            document.getElementById('loading-spinner').classList.remove('d-none');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-spinner').classList.add('d-none');
+        }
+
+        function showError(message) {
+            const container = document.getElementById('error-container');
+            container.textContent = message;
+            container.classList.remove('d-none');
+            setTimeout(() => container.classList.add('d-none'), 5000);
+        }
+
+        function showSuccess(message) {
+            const container = document.getElementById('success-container');
+            container.textContent = message;
+            container.classList.remove('d-none');
+            setTimeout(() => container.classList.add('d-none'), 5000);
+        }
+
+        // Initialize page
+        function init() {
+            // Check authentication
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // Set up form handlers
+            const form = document.getElementById('listing-form');
+            const imageInput = document.getElementById('images');
+            const typeSelect = document.getElementById('type');
+            const priceContainer = document.getElementById('price-container');
+
+            // Handle image selection
+            imageInput.onchange = handleImageSelect;
+
+            // Handle listing type change
+            typeSelect.onchange = () => {
+                priceContainer.style.display = 
+                    typeSelect.value === 'Sell' ? 'block' : 'none';
+            };
+
+            // Handle form submission
+            form.onsubmit = handleSubmit;
+        }
+
+        // Handle image selection
+        async function handleImageSelect(e) {
+            const files = Array.from(e.target.files);
+            const previewsContainer = document.getElementById('image-previews');
+            previewsContainer.innerHTML = '';
+
+            // Validate files
+            if (files.length > 5) {
+                showError('Maximum 5 images allowed');
+                e.target.value = '';
+                return;
+            }
+
+            try {
+                for (const file of files) {
+                    // Validate file
+                    validateFile(file);
+
+                    // Create preview
+                    const col = document.createElement('div');
+                    col.className = 'col-4';
+                    col.innerHTML = `
+                        <img src="${URL.createObjectURL(file)}" 
+                             class="img-fluid rounded" 
+                             alt="Preview">
+                    `;
+                    previewsContainer.appendChild(col);
+
+                    // Classify first image
+                    if (files.indexOf(file) === 0) {
+                        const classification = await classifyImage(file);
+                        displayClassification(classification);
+                    }
+                }
+            } catch (error) {
+                showError(error.message);
+                e.target.value = '';
+                previewsContainer.innerHTML = '';
+            }
+        }
+
+        // Display classification results
+        function displayClassification(result) {
+            const container = document.getElementById('classification-result');
+            container.innerHTML = `
+                <div class="alert alert-info">
+                    <h6 class="alert-heading">AI Classification Results</h6>
+                    <p class="mb-1">Category: ${result.category}</p>
+                    <p class="mb-1">Subtype: ${result.subtype}</p>
+                    <p class="mb-0">Confidence: ${result.confidence}%</p>
+                </div>
+            `;
+
+            // Auto-fill category if not already selected
+            const categorySelect = document.getElementById('category');
+            if (!categorySelect.value) {
+                categorySelect.value = result.category;
+            }
+        }
+
+        // Handle form submission
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            try {
+                showLoading();
+                
+                const formData = new FormData(e.target);
+                const files = formData.getAll('images');
+
+                // Upload images
+                const imageUrls = await uploadMultipleFiles(
+                    `listings/${Date.now()}`,
+                    files
+                );
+
+                // Create listing
+                const listing = {
+                    title: formData.get('title'),
+                    description: formData.get('description'),
+                    category: formData.get('category'),
+                    subtype: formData.get('subtype'),
+                    quantity: Number(formData.get('quantity')),
+                    unit: formData.get('unit'),
+                    condition: formData.get('condition'),
+                    type: formData.get('type'),
+                    price: formData.get('type') === 'Sell' ? 
+                        Number(formData.get('price')) : null,
+                    city: formData.get('city'),
+                    images: imageUrls,
+                    tags: formData.get('tags')
+                        .split(',')
+                        .map(tag => tag.trim())
+                        .filter(Boolean),
+                    ownerId: getCurrentUser().uid,
+                    status: 'active'
+                };
+
+                const listingRef = await createListing(listing);
+                showSuccess('Listing created successfully!');
+                
+                // Redirect to listing page after a short delay
+                setTimeout(() => {
+                    window.location.href = `listing.html?id=${listingRef.id}`;
+                }, 1500);
+            } catch (error) {
+                console.error('Error creating listing:', error);
+                showError('Failed to create listing');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

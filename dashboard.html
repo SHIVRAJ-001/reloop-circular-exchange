@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Reloop</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-green: #4CAF50;
+            --primary-green-dark: #45a049;
+            --primary-green-light: #66BB6A;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --text-dark: #333333;
+            --text-muted: #6c757d;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 15px rgba(0, 0, 0, 0.15);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--bg-white) !important;
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand::before {
+            content: "♻️";
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-green) !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 3px;
+            background-color: var(--primary-green);
+            border-radius: 2px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: var(--bg-white);
+            font-weight: 600;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-green-dark);
+            border-color: var(--primary-green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .btn-outline-primary:hover,
+        .btn-outline-primary.active {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: var(--bg-white);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            transition: var(--transition);
+        }
+
+        .btn-success:hover {
+            background-color: var(--primary-green-dark);
+            border-color: var(--primary-green-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            overflow: hidden;
+            background-color: var(--bg-white);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            background-color: var(--bg-light);
+            border-bottom: 2px solid #e9ecef;
+            padding: 1rem 1.25rem;
+        }
+
+        .card-title {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        .card-subtitle {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        /* Profile Card */
+        .card img.rounded-circle {
+            border: 4px solid var(--primary-green);
+            box-shadow: var(--shadow);
+        }
+
+        /* Stats Card */
+        .card .d-flex.justify-content-between {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .card .d-flex.justify-content-between:last-child {
+            border-bottom: none;
+        }
+
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .alert-info {
+            background-color: #e8f5e9;
+            color: var(--text-dark);
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: var(--text-dark);
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .alert-danger {
+            background-color: #ffebee;
+            color: var(--text-dark);
+            border-left: 4px solid #dc3545;
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .bg-success {
+            background-color: var(--primary-green) !important;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        .bg-warning {
+            background-color: #ffc107 !important;
+        }
+
+        .bg-info {
+            background-color: #17a2b8 !important;
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--text-dark);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            transition: var(--transition);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--primary-green);
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--primary-green);
+            background-color: var(--bg-white);
+            border-bottom: 3px solid var(--primary-green);
+            font-weight: 600;
+        }
+
+        /* Button Groups */
+        .btn-group .btn {
+            border-radius: 0;
+        }
+
+        .btn-group .btn:first-child {
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        .btn-group .btn:last-child {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Modals */
+        .modal-content {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .modal-header {
+            background-color: var(--bg-light);
+            border-bottom: 2px solid #e9ecef;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .modal-title {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #e9ecef;
+        }
+
+        /* Form Controls */
+        .form-control {
+            border: 2px solid #dee2e6;
+            border-radius: var(--border-radius);
+            padding: 0.6rem 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        /* Loading Spinner */
+        #loading-spinner {
+            z-index: 9999;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+        }
+
+        .spinner-border.text-primary {
+            color: var(--primary-green) !important;
+        }
+
+        /* Alert Containers */
+        #error-container,
+        #success-container {
+            z-index: 9998;
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        /* Images in Cards */
+        .card img.img-fluid {
+            object-fit: cover;
+            height: 200px;
+            width: 100%;
+        }
+
+        /* Link Styles */
+        a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-green-dark);
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .btn-group .btn {
+                border-radius: var(--border-radius) !important;
+                margin-bottom: 0.5rem;
+            }
+
+            .card img.img-fluid {
+                height: 150px;
+            }
+        }
+
+        /* Smooth Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Quick Actions Grid */
+        .d-grid.gap-2 .btn {
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        .d-grid.gap-2 .btn i {
+            margin-right: 0.5rem;
+        }
+
+        /* Empty State */
+        .text-center.text-muted {
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
+        /* Transaction Cards */
+        .card .card-body small a {
+            font-weight: 600;
+        }
+
+        /* Profile Photo in Sidebar */
+        [data-profile-photo] {
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        [data-profile-photo]:hover {
+            transform: scale(1.05);
+        }
+
+        /* Stats Highlight */
+        [data-eco-points],
+        [data-active-listings],
+        [data-completed-transactions],
+        [data-total-recycled] {
+            color: var(--primary-green);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                Reloop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketplace.html">Marketplace</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" data-auth-required>
+                        <a class="nav-link" href="chat.html">
+                            Chat
+                            <span class="badge bg-danger d-none" data-unread-count></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-auth-required>
+                        <a class="nav-link active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item" data-profile-link>
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item" data-auth-required>
+                        <button class="btn btn-outline-primary" onclick="logout()">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container py-5">
+        <div class="row g-4">
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <!-- Profile Summary -->
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img data-profile-photo 
+                             src="https://static.vecteezy.com/system/resources/thumbnails/025/869/629/small/round-profile-image-of-man-avatar-for-social-networks-fashion-beauty-blue-and-black-bright-illustration-in-trendy-style-vector.jpg" 
+                             class="rounded-circle mb-3" 
+                             alt="Profile Photo"
+                             width="100" 
+                             height="100">
+                        <h5 class="card-title" data-user-name></h5>
+                        <p class="card-text text-muted" data-user-role></p>
+                        <div class="d-grid">
+                            <a href="profile.html" class="btn btn-outline-primary">
+                                Edit Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-3">Stats</h6>
+                        <div class="mb-3 d-flex justify-content-between">
+                            <span>Eco Points</span>
+                            <strong data-eco-points>0</strong>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-between">
+                            <span>Active Listings</span>
+                            <strong data-active-listings>0</strong>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-between">
+                            <span>Completed Transactions</span>
+                            <strong data-completed-transactions>0</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Total Recycled</span>
+                            <strong data-total-recycled>0 kg</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-3">Quick Actions</h6>
+                        <div class="d-grid gap-2">
+                            <a href="add-listing.html" class="btn btn-primary">
+                                <i class="bi bi-plus-lg"></i>
+                                Add New Listing
+                            </a>
+                            <a href="chat.html" class="btn btn-outline-primary">
+                                <i class="bi bi-chat"></i>
+                                View Messages
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Notifications -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Recent Activity</h5>
+                        <div data-notifications>
+                            <!-- Notifications will be inserted here -->
+                            <div class="text-center text-muted py-3 d-none" data-no-notifications>
+                                No recent activity
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Listings -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">My Listings</h5>
+                        <div class="btn-group">
+                            <button type="button" 
+                                    class="btn btn-outline-primary active" 
+                                    data-filter="active">
+                                Active
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-outline-primary" 
+                                    data-filter="completed">
+                                Completed
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div data-listings>
+                            <!-- Listings will be inserted here -->
+                            <div class="text-center text-muted py-3 d-none" data-no-listings>
+                                No listings found
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Transactions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">My Transactions</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <button class="nav-link active" 
+                                        data-bs-toggle="tab" 
+                                        data-bs-target="#requests-received">
+                                    Requests Received
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" 
+                                        data-bs-toggle="tab" 
+                                        data-bs-target="#requests-sent">
+                                    Requests Sent
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- Requests Received -->
+                            <div class="tab-pane fade show active" id="requests-received">
+                                <div data-received-requests>
+                                    <!-- Received requests will be inserted here -->
+                                    <div class="text-center text-muted py-3 d-none" data-no-received>
+                                        No requests received
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Requests Sent -->
+                            <div class="tab-pane fade" id="requests-sent">
+                                <div data-sent-requests>
+                                    <!-- Sent requests will be inserted here -->
+                                    <div class="text-center text-muted py-3 d-none" data-no-sent>
+                                        No requests sent
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Modals -->
+    <!-- Accept Request Modal -->
+    <div class="modal fade" id="acceptModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Accept Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to accept this request?</p>
+                    <p class="mb-0">This will:</p>
+                    <ul>
+                        <li>Update the transaction status to "accepted"</li>
+                        <li>Notify the requester</li>
+                        <li>Create a chat for coordination</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" data-accept-confirm>Accept Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complete Transaction Modal -->
+    <div class="modal fade" id="completeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Complete Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to mark this transaction as complete?</p>
+                    <p>This will:</p>
+                    <ul>
+                        <li>Update the transaction status to "completed"</li>
+                        <li>Award eco points to both parties</li>
+                        <li>Update the listing quantity/status</li>
+                    </ul>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="confirmCheck" required>
+                        <label class="form-check-label" for="confirmCheck">
+                            I confirm that the material has been transferred successfully
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" data-complete-confirm>Complete Transaction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Transaction Modal -->
+    <div class="modal fade" id="cancelModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancel Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to cancel this transaction?</p>
+                    <div class="mb-3">
+                        <label for="cancelReason" class="form-label">Reason for cancellation</label>
+                        <textarea class="form-control" id="cancelReason" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                    <button type="button" class="btn btn-danger" data-cancel-confirm>Cancel Transaction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Listing Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Listing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this listing?</p>
+                    <p class="text-danger">This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-delete-confirm>Delete Listing</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="position-fixed top-50 start-50 translate-middle d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Alert Containers -->
+    <div id="error-container" class="alert alert-danger position-fixed bottom-0 end-0 m-3 d-none" role="alert"></div>
+    <div id="success-container" class="alert alert-success position-fixed bottom-0 end-0 m-3 d-none" role="alert"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- App Logic -->
+    <script type="module">
+        import app from '/assets/js/app.js';
+        import { getCurrentUser, logout } from '/assets/js/auth.js';
+        import { 
+            getUserProfile,
+            getListings,
+            getTransactions,
+            updateTransaction,
+            deleteListing,
+            updateListing,
+            getNotifications
+        } from '/assets/js/db.js';
+        import { deleteListingImages } from '/assets/js/storage.js';
+        import { createChat } from '/assets/js/chat.js';
+
+        // Make logout function available globally
+        window.logout = logout;
+
+        // Helper functions
+        function showLoading() {
+            document.getElementById('loading-spinner').classList.remove('d-none');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-spinner').classList.add('d-none');
+        }
+
+        function showError(message) {
+            const container = document.getElementById('error-container');
+            container.textContent = message;
+            container.classList.remove('d-none');
+            setTimeout(() => container.classList.add('d-none'), 5000);
+        }
+
+        function showSuccess(message) {
+            const container = document.getElementById('success-container');
+            container.textContent = message;
+            container.classList.remove('d-none');
+            setTimeout(() => container.classList.add('d-none'), 5000);
+        }
+
+        // Initialize page
+        async function init() {
+            // Check authentication
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            try {
+                showLoading();
+
+                // Load user profile
+                const profile = await getUserProfile(user.uid);
+                updateProfileUI(profile);
+
+                // Load notifications
+                await loadNotifications(user.uid);
+
+                // Load listings
+                await loadListings(user.uid);
+
+                // Load transactions
+                await loadTransactions(user.uid);
+
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                showError('Failed to load dashboard data');
+            } finally {
+                hideLoading();
+            }
+
+            // Set up event handlers
+            setupEventHandlers();
+        }
+
+        // Update profile UI
+        function updateProfileUI(profile) {
+            document.querySelector('[data-user-name]').textContent = profile.name;
+            document.querySelector('[data-user-role]').textContent = profile.role;
+            if (profile.photoURL) {
+                document.querySelector('[data-profile-photo]').src = profile.photoURL;
+            }
+            document.querySelector('[data-eco-points]').textContent = profile.ecoPoints;
+        }
+
+        // Load notifications
+        async function loadNotifications(userId) {
+            const notifications = await getNotifications(userId);
+            const container = document.querySelector('[data-notifications]');
+            const noNotifications = document.querySelector('[data-no-notifications]');
+
+            if (notifications.length === 0) {
+                noNotifications.classList.remove('d-none');
+                return;
+            }
+
+            notifications.forEach(notification => {
+                const div = document.createElement('div');
+                div.className = 'alert alert-info mb-2';
+                div.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="${notification.icon} me-2"></i>
+                        <div class="flex-grow-1">
+                            <p class="mb-1">${notification.message}</p>
+                            <small class="text-muted">
+                                ${new Date(notification.createdAt).toLocaleString()}
+                            </small>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Load listings
+        async function loadListings(userId) {
+            const listings = await getListings({ ownerId: userId });
+            const container = document.querySelector('[data-listings]');
+            const noListings = document.querySelector('[data-no-listings]');
+
+            if (listings.length === 0) {
+                noListings.classList.remove('d-none');
+                return;
+            }
+
+            listings.forEach(listing => {
+                const div = document.createElement('div');
+                div.className = 'card mb-3';
+                div.dataset.listingId = listing.id;
+                div.dataset.status = listing.status;
+                div.innerHTML = `
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="${listing.images[0]}" 
+                                 class="img-fluid rounded-start" 
+                                 alt="${listing.title}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <h5 class="card-title">${listing.title}</h5>
+                                    <span class="badge bg-${listing.status === 'active' ? 'success' : 'secondary'}">
+                                        ${listing.status}
+                                    </span>
+                                </div>
+                                <p class="card-text">${listing.description}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        Posted ${new Date(listing.createdAt).toLocaleDateString()}
+                                    </small>
+                                    <div class="btn-group">
+                                        <a href="/listing.html?id=${listing.id}" 
+                                           class="btn btn-outline-primary btn-sm">
+                                            View
+                                        </a>
+                                        <button type="button" 
+                                                class="btn btn-outline-danger btn-sm"
+                                                onclick="deleteListing('${listing.id}')">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Load transactions
+        async function loadTransactions(userId) {
+            const receivedContainer = document.querySelector('[data-received-requests]');
+            const sentContainer = document.querySelector('[data-sent-requests]');
+            const noReceived = document.querySelector('[data-no-received]');
+            const noSent = document.querySelector('[data-no-sent]');
+
+            // Load received requests
+            const received = await getTransactions({ ownerId: userId });
+            if (received.length === 0) {
+                noReceived.classList.remove('d-none');
+            } else {
+                received.forEach(tx => createTransactionCard(tx, receivedContainer, 'received'));
+            }
+
+            // Load sent requests
+            const sent = await getTransactions({ requesterId: userId });
+            if (sent.length === 0) {
+                noSent.classList.remove('d-none');
+            } else {
+                sent.forEach(tx => createTransactionCard(tx, sentContainer, 'sent'));
+            }
+        }
+
+        // Create transaction card
+        function createTransactionCard(transaction, container, type) {
+            const div = document.createElement('div');
+            div.className = 'card mb-3';
+            div.dataset.transactionId = transaction.id;
+            
+            // Get appropriate actions based on transaction status and type
+            const actions = getTransactionActions(transaction, type);
+
+            div.innerHTML = `
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="card-subtitle mb-1">
+                                ${transaction.listing.title}
+                            </h6>
+                            <p class="card-text">
+                                Quantity: ${transaction.quantity} ${transaction.listing.unit}
+                            </p>
+                        </div>
+                        <span class="badge bg-${getStatusColor(transaction.status)}">
+                            ${transaction.status}
+                        </span>
+                    </div>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            ${type === 'received' ? 'From' : 'To'}: 
+                            <a href="/profile.html?uid=${type === 'received' ? transaction.requesterId : transaction.ownerId}">
+                                ${type === 'received' ? transaction.requester.name : transaction.owner.name}
+                            </a>
+                        </small>
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            ${new Date(transaction.createdAt).toLocaleString()}
+                        </small>
+                        <div class="btn-group">
+                            ${actions}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        // Get transaction action buttons based on status and type
+        function getTransactionActions(transaction, type) {
+            const status = transaction.status;
+            
+            if (type === 'received') {
+                switch (status) {
+                    case 'pending':
+                        return `
+                            <button type="button" 
+                                    class="btn btn-success btn-sm"
+                                    onclick="acceptTransaction('${transaction.id}')">
+                                Accept
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-danger btn-sm"
+                                    onclick="cancelTransaction('${transaction.id}')">
+                                Decline
+                            </button>
+                        `;
+                    case 'accepted':
+                        return `
+                            <button type="button" 
+                                    class="btn btn-success btn-sm"
+                                    onclick="completeTransaction('${transaction.id}')">
+                                Complete
+                            </button>
+                            <button type="button" 
+                                    class="btn btn-danger btn-sm"
+                                    onclick="cancelTransaction('${transaction.id}')">
+                                Cancel
+                            </button>
+                        `;
+                    default:
+                        return '';
+                }
+            } else {
+                if (status === 'pending' || status === 'accepted') {
+                    return `
+                        <button type="button" 
+                                class="btn btn-danger btn-sm"
+                                onclick="cancelTransaction('${transaction.id}')">
+                            Cancel
+                        </button>
+                    `;
+                }
+                return '';
+            }
+        }
+
+        // Get status color
+        function getStatusColor(status) {
+            switch (status) {
+                case 'pending': return 'warning';
+                case 'accepted': return 'info';
+                case 'completed': return 'success';
+                case 'cancelled': return 'danger';
+                default: return 'secondary';
+            }
+        }
+
+        // Set up event handlers
+        function setupEventHandlers() {
+            // Filter listings
+            document.querySelectorAll('[data-filter]').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const filter = e.target.dataset.filter;
+                    
+                    // Update button states
+                    document.querySelectorAll('[data-filter]').forEach(btn => {
+                        btn.classList.toggle('active', btn === e.target);
+                    });
+
+                    // Filter listings
+                    document.querySelectorAll('[data-listing-id]').forEach(listing => {
+                        const status = listing.dataset.status;
+                        listing.classList.toggle('d-none', 
+                            filter === 'active' ? status !== 'active' : status === 'active'
+                        );
+                    });
+                });
+            });
+
+            // Modal confirmations
+            document.querySelector('[data-accept-confirm]').addEventListener('click', async () => {
+                const id = document.querySelector('[data-accept-confirm]').dataset.transactionId;
+                await handleAcceptTransaction(id);
+            });
+
+            document.querySelector('[data-complete-confirm]').addEventListener('click', async () => {
+                const id = document.querySelector('[data-complete-confirm]').dataset.transactionId;
+                await handleCompleteTransaction(id);
+            });
+
+            document.querySelector('[data-cancel-confirm]').addEventListener('click', async () => {
+                const id = document.querySelector('[data-cancel-confirm]').dataset.transactionId;
+                const reason = document.getElementById('cancelReason').value;
+                await handleCancelTransaction(id, reason);
+            });
+
+            document.querySelector('[data-delete-confirm]').addEventListener('click', async () => {
+                const id = document.querySelector('[data-delete-confirm]').dataset.listingId;
+                await handleDeleteListing(id);
+            });
+        }
+
+        // Transaction handlers
+        async function handleAcceptTransaction(id) {
+            try {
+                showLoading();
+                
+                await updateTransaction(id, {
+                    status: 'accepted',
+                    acceptedAt: new Date().toISOString()
+                });
+
+                // Create chat if doesn't exist
+                const transaction = await getTransactions({ id });
+                await createChat([
+                    transaction.ownerId,
+                    transaction.requesterId
+                ]);
+
+                showSuccess('Transaction accepted successfully');
+                setTimeout(() => location.reload(), 1500);
+            } catch (error) {
+                console.error('Error accepting transaction:', error);
+                showError('Failed to accept transaction');
+            } finally {
+                hideLoading();
+                bootstrap.Modal.getInstance(document.getElementById('acceptModal')).hide();
+            }
+        }
+
+        async function handleCompleteTransaction(id) {
+            try {
+                showLoading();
+
+                const confirmed = document.getElementById('confirmCheck').checked;
+                if (!confirmed) {
+                    showError('Please confirm the material transfer');
+                    hideLoading();
+                    return;
+                }
+
+                await updateTransaction(id, {
+                    status: 'completed',
+                    completedAt: new Date().toISOString()
+                });
+
+                showSuccess('Transaction completed successfully');
+                setTimeout(() => location.reload(), 1500);
+            } catch (error) {
+                console.error('Error completing transaction:', error);
+                showError('Failed to complete transaction');
+            } finally {
+                hideLoading();
+                bootstrap.Modal.getInstance(document.getElementById('completeModal')).hide();
+            }
+        }
+
+        async function handleCancelTransaction(id, reason) {
+            try {
+                showLoading();
+
+                if (!reason) {
+                    showError('Please provide a reason for cancellation');
+                    hideLoading();
+                    return;
+                }
+
+                await updateTransaction(id, {
+                    status: 'cancelled',
+                    cancelledAt: new Date().toISOString(),
+                    cancelReason: reason
+                });
+
+                showSuccess('Transaction cancelled');
+                setTimeout(() => location.reload(), 1500);
+            } catch (error) {
+                console.error('Error cancelling transaction:', error);
+                showError('Failed to cancel transaction');
+            } finally {
+                hideLoading();
+                bootstrap.Modal.getInstance(document.getElementById('cancelModal')).hide();
+            }
+        }
+
+        async function handleDeleteListing(id) {
+            try {
+                showLoading();
+
+                // Delete images first
+                await deleteListingImages(id);
+
+                // Then delete listing
+                await deleteListing(id);
+
+                showSuccess('Listing deleted successfully');
+                setTimeout(() => location.reload(), 1500);
+            } catch (error) {
+                console.error('Error deleting listing:', error);
+                showError('Failed to delete listing');
+            } finally {
+                hideLoading();
+                bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+            }
+        }
+
+        // Make functions available globally
+        window.acceptTransaction = (id) => {
+            document.querySelector('[data-accept-confirm]').dataset.transactionId = id;
+            new bootstrap.Modal(document.getElementById('acceptModal')).show();
+        };
+
+        window.completeTransaction = (id) => {
+            document.querySelector('[data-complete-confirm]').dataset.transactionId = id;
+            new bootstrap.Modal(document.getElementById('completeModal')).show();
+        };
+
+        window.cancelTransaction = (id) => {
+            document.querySelector('[data-cancel-confirm]').dataset.transactionId = id;
+            document.getElementById('cancelReason').value = '';
+            new bootstrap.Modal(document.getElementById('cancelModal')).show();
+        };
+
+        window.deleteListing = (id) => {
+            document.querySelector('[data-delete-confirm]').dataset.listingId = id;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        };
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

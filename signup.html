@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Reloop ♻️</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           ROOT VARIABLES & RESET
+           ============================================ */
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --primary-dark: #388e3c;
+            --bg-light: #f8f9fa;
+            --text-dark: #333;
+            --white: #ffffff;
+            --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 15px rgba(0, 0, 0, 0.15);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ============================================
+           GLOBAL STYLES
+           ============================================ */
+        body {
+            font-family: 'Poppins', 'Open Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* ============================================
+           NAVBAR STYLES
+           ============================================ */
+        .navbar {
+            background-color: var(--white) !important;
+            box-shadow: var(--shadow-soft);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            transition: var(--transition);
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-dark) !important;
+            transform: scale(1.05);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color) !important;
+        }
+
+        /* ============================================
+           CARD STYLES
+           ============================================ */
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        /* ============================================
+           FORM STYLES
+           ============================================ */
+        .form-label {
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+            outline: none;
+        }
+
+        /* ============================================
+           BUTTON STYLES
+           ============================================ */
+        .btn {
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* ============================================
+           CHECKBOX STYLES
+           ============================================ */
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* ============================================
+           ALERT STYLES
+           ============================================ */
+        .alert {
+            border-radius: var(--border-radius);
+            border: none;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-soft);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* ============================================
+           SPINNER STYLES
+           ============================================ */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+            border-color: var(--primary-color);
+            border-right-color: transparent;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                Reloop ♻️
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Signup Form -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <h2>Create an Account</h2>
+                            <p class="text-muted">Join the sustainability revolution</p>
+                        </div>
+                        
+                        <form id="signup-form" novalidate>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">
+                                    <i class="bi bi-person-fill me-1"></i>Full Name
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="name" 
+                                       placeholder="Enter your full name"
+                                       required>
+                                <div class="invalid-feedback">Please enter your name.</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">
+                                    <i class="bi bi-envelope-fill me-1"></i>Email Address
+                                </label>
+                                <input type="email" 
+                                       class="form-control" 
+                                       id="email" 
+                                       placeholder="your.email@example.com"
+                                       required>
+                                <div class="invalid-feedback">Please enter a valid email.</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">
+                                    <i class="bi bi-lock-fill me-1"></i>Password
+                                </label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="password" 
+                                       placeholder="At least 6 characters"
+                                       minlength="6"
+                                       required>
+                                <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="role" class="form-label">
+                                    <i class="bi bi-briefcase-fill me-1"></i>I am a
+                                </label>
+                                <select class="form-select" id="role" required>
+                                    <option value="">Select your role</option>
+                                    <option value="Recycler">♻️ Recycler</option>
+                                    <option value="Manufacturer">🏭 Manufacturer</option>
+                                    <option value="Artisan">🎨 Artisan</option>
+                                    <option value="Donor">💚 Donor</option>
+                                </select>
+                                <div class="invalid-feedback">Please select your role.</div>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the Terms of Service and Privacy Policy
+                                </label>
+                                <div class="invalid-feedback">You must agree to continue.</div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 mb-3">
+                                <i class="bi bi-person-plus-fill me-2"></i>Create Account
+                            </button>
+                        </form>
+                        
+                        <div class="text-center mb-3">
+                            <span class="text-muted">or</span>
+                        </div>
+                        
+                        <button type="button" class="btn btn-outline-primary w-100 mb-3" id="google-signup">
+                            <svg width="20" height="20" viewBox="0 0 24 24" class="me-2">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Continue with Google
+                        </button>
+                        
+                        <hr class="my-4">
+                        
+                        <p class="text-center mb-0">
+                            Already have an account? 
+                            <a href="login.html" class="fw-semibold">Login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="position-fixed top-50 start-50 translate-middle d-none">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Alert Containers -->
+    <div id="error-container" class="alert alert-danger position-fixed bottom-0 end-0 m-3 d-none" role="alert"></div>
+    <div id="success-container" class="alert alert-success position-fixed bottom-0 end-0 m-3 d-none" role="alert"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase JS -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword,
+            signInWithPopup,
+            GoogleAuthProvider,
+            updateProfile,
+            onAuthStateChanged
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc,
+            getDoc
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
+
+        // ============================================
+        // Firebase Configuration - REPLACE WITH YOUR CONFIG
+        // ============================================
+        const firebaseConfig = {
+  apiKey: "AIzaSyDd_hjT0dFfGeVAmiBSbIBZcI874pkkm54",
+  authDomain: "reloop-15195.firebaseapp.com",
+  projectId: "reloop-15195",
+  storageBucket: "reloop-15195.firebasestorage.app",
+  messagingSenderId: "492482751233",
+  appId: "1:492482751233:web:79cc273145a45682ce4900"
+};
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // ============================================
+        // Helper Functions
+        // ============================================
+        function showLoading() {
+            document.getElementById('loading-spinner').classList.remove('d-none');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-spinner').classList.add('d-none');
+        }
+
+        function showError(message) {
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.textContent = message;
+            errorContainer.classList.remove('d-none');
+            setTimeout(() => errorContainer.classList.add('d-none'), 5000);
+        }
+
+        function showSuccess(message) {
+            const successContainer = document.getElementById('success-container');
+            successContainer.textContent = message;
+            successContainer.classList.remove('d-none');
+            setTimeout(() => successContainer.classList.add('d-none'), 5000);
+        }
+
+        async function saveUserData(userId, userData) {
+            await setDoc(doc(db, 'users', userId), {
+                ...userData,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            });
+        }
+
+        async function getUserData(userId) {
+            const userDoc = await getDoc(doc(db, 'users', userId));
+            return userDoc.exists() ? userDoc.data() : null;
+        }
+
+        async function promptForRole() {
+            return new Promise((resolve) => {
+                const modal = document.createElement('div');
+                modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999';
+                
+                modal.innerHTML = `
+                    <div style="background:white;padding:2rem;border-radius:10px;max-width:400px;width:90%">
+                        <h3 style="margin-bottom:1rem;color:#333">Select Your Role</h3>
+                        <select id="role-select" class="form-select mb-3">
+                            <option value="">Select your role</option>
+                            <option value="Recycler">♻️ Recycler</option>
+                            <option value="Manufacturer">🏭 Manufacturer</option>
+                            <option value="Artisan">🎨 Artisan</option>
+                            <option value="Donor">💚 Donor</option>
+                        </select>
+                        <button id="role-confirm" class="btn btn-primary w-100">Confirm</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                document.getElementById('role-confirm').onclick = () => {
+                    const role = document.getElementById('role-select').value;
+                    if (role) {
+                        document.body.removeChild(modal);
+                        resolve(role);
+                    } else {
+                        showError('Please select a role');
+                    }
+                };
+            });
+        }
+
+        // ============================================
+        // Email/Password Signup
+        // ============================================
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!e.target.checkValidity()) {
+                e.target.classList.add('was-validated');
+                return;
+            }
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value.trim();
+            const role = document.getElementById('role').value;
+            
+            showLoading();
+            
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, { displayName: name });
+                await saveUserData(userCredential.user.uid, {
+                    name, email, role, emailVerified: false
+                });
+                
+                hideLoading();
+                showSuccess('Account created successfully! Redirecting...');
+                setTimeout(() => window.location.href = 'dashboard.html', 1500);
+            } catch (error) {
+                hideLoading();
+                let errorMessage = 'Failed to create account';
+                
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'This email is already registered';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Invalid email address';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'Password is too weak';
+                }
+                
+                showError(errorMessage);
+            }
+        });
+
+        // ============================================
+        // Google Signup
+        // ============================================
+        document.getElementById('google-signup').addEventListener('click', async () => {
+            showLoading();
+            
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const userData = await getUserData(result.user.uid);
+                
+                if (!userData) {
+                    const role = await promptForRole();
+                    await saveUserData(result.user.uid, {
+                        name: result.user.displayName,
+                        email: result.user.email,
+                        role,
+                        emailVerified: result.user.emailVerified
+                    });
+                }
+                
+                hideLoading();
+                showSuccess('Login successful! Redirecting...');
+                setTimeout(() => window.location.href = 'dashboard.html', 1500);
+            } catch (error) {
+                hideLoading();
+                if (!error.message.includes('popup')) {
+                    showError('Failed to sign in with Google');
+                }
+            }
+        });
+
+        // ============================================
+        // Check if already logged in
+        // ============================================
+      
+    </script>
+</body>
+</html>

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Reloop</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-green: #4CAF50;
+            --primary-green-dark: #45a049;
+            --primary-green-light: #66BB6A;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --text-dark: #333333;
+            --text-muted: #6c757d;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 15px rgba(0, 0, 0, 0.15);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--bg-white) !important;
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand::before {
+            content: "♻️";
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-green) !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 3px;
+            background-color: var(--primary-green);
+            border-radius: 2px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: var(--bg-white);
+            font-weight: 600;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-green-dark);
+            border-color: var(--primary-green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .btn-outline-primary:hover,
+        .btn-outline-primary.active {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: var(--bg-white);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .bg-primary {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%) !important;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .bg-primary h1 {
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-primary .lead {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Top Three Cards */
+        .border-primary {
+            border: 3px solid var(--primary-green) !important;
+        }
+
+        .card img.rounded-circle {
+            border: 4px solid var(--bg-light);
+            box-shadow: var(--shadow);
+        }
+
+        /* Table Styles */
+        .table {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .table thead {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .table tbody tr {
+            transition: var(--transition);
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .table th button {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .table th button:hover {
+            color: var(--primary-green);
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .bg-primary.badge {
+            background-color: var(--primary-green) !important;
+        }
+
+        .bg-success {
+            background-color: var(--primary-green) !important;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        /* Progress Bars */
+        .progress {
+            border-radius: var(--border-radius);
+            background-color: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .progress-bar.bg-success {
+            background-color: var(--primary-green) !important;
+        }
+
+        /* Pagination */
+        .pagination .page-link {
+            color: var(--primary-green);
+            border: 1px solid #dee2e6;
+            margin: 0 3px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .pagination .page-link:hover {
+            background-color: var(--primary-green);
+            color: var(--bg-white);
+            border-color: var(--primary-green);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        /* Input Groups */
+        .input-group .form-control {
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            border: 2px solid #dee2e6;
+            transition: var(--transition);
+        }
+
+        .input-group .form-control:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        .input-group .btn {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Loading Spinner */
+        #loading-spinner {
+            z-index: 9999;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+        }
+
+        .spinner-border.text-primary {
+            color: var(--primary-green) !important;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+
+            .display-4 {
+                font-size: 2rem;
+            }
+
+            .lead {
+                font-size: 1rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .table {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Smooth Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Link Styles */
+        a {
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-green-dark);
+            text-decoration: underline;
+        }
+
+        /* Stats Display */
+        .bg-primary h3 {
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .bg-primary small {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Medal Positioning */
+        .position-relative img[alt*="Medal"] {
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Community Impact Section */
+        .card-body h6 {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Button Groups */
+        .btn-group .btn {
+            border-radius: 0;
+        }
+
+        .btn-group .btn:first-child {
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        .btn-group .btn:last-child {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                Reloop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="marketplace.html">Marketplace</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                  
+                    <li class="nav-item" data-auth-required>
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item" data-profile-link>
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item" data-auth-required>
+                        <button class="btn btn-outline-primary" onclick="logout()">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 mb-3">Eco Champions</h1>
+                    <p class="lead mb-4">
+                        Recognizing the top contributors in our circular economy. Every transaction counts towards a more sustainable future.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <div>
+                            <h3 class="mb-0" data-total-users>100</h3>
+                            <small>Active Users</small>
+                        </div>
+                        <div>
+                            <h3 class="mb-0" data-total-recycled>1000</h3>
+                            <small>kg Recycled</small>
+                        </div>
+                        <div>
+                            <h3 class="mb-0" data-total-transactions>50</h3>
+                            <small>Transactions</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/leaderboard-icon-svg-download-png-4432579.png?f=webp&w=128" 
+                         class="img-fluid" 
+                         alt="Leaderboard Hero">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Content -->
+    <div class="container py-5">
+        <!-- Time Period Filter -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="btn-group" role="group">
+                    <button type="button" 
+                            class="btn btn-outline-primary active" 
+                            data-period="all-time">
+                        All Time
+                    </button>
+                    <button type="button" 
+                            class="btn btn-outline-primary" 
+                            data-period="this-month">
+                        This Month
+                    </button>
+                    <button type="button" 
+                            class="btn btn-outline-primary" 
+                            data-period="this-week">
+                        This Week
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="search" 
+                           class="form-control" 
+                           placeholder="Search users..."
+                           data-search-input>
+                    <button class="btn btn-outline-primary" type="button" data-search-btn>
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Top 3 Users -->
+            <div class="col-12">
+                <div class="row g-4 justify-content-center" data-top-three>
+                    <!-- 2nd Place -->
+                    <div class="col-md-3">
+                        <div class="card text-center h-100">
+                            <div class="card-body">
+                                <div class="position-relative d-inline-block mb-3">
+                                    <img src="https://www.svgrepo.com/show/452101/silver-medal.svg" 
+                                         class="position-absolute top-0 end-0" 
+                                         width="32" 
+                                         alt="Silver Medal">
+                                    <img data-photo
+                                         src="https://i1.wp.com/www.shutterstock.com/blog/wp-content/uploads/sites/5/2024/06/profile_photo_sample_13.jpg?ssl=1" 
+                                         class="rounded-circle" 
+                                         width="100" 
+                                         height="100" 
+                                         alt="2nd Place">
+                                </div>
+                                <h5 class="card-title mb-1" data-name></h5>
+                                <p class="text-muted mb-3" data-role></p>
+                                <div class="d-flex justify-content-around">
+                                    <div>
+                                        <h6 class="mb-0" data-points></h6>
+                                        <small class="text-muted">Points 175</small>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0" data-recycled></h6>
+                                        <small class="text-muted">kg 15</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1st Place -->
+                    <div class="col-md-4">
+                        <div class="card text-center h-100 border-primary">
+                            <div class="card-body">
+                                <div class="position-relative d-inline-block mb-3">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/9521/9521731.png" 
+                                         class="position-absolute top-0 end-0" 
+                                         width="40" 
+                                         alt="Gold Medal">
+                                    <img data-photo
+                                         src="https://pfpmaker.com/images/home/profile-4.png" 
+                                         class="rounded-circle" 
+                                         width="120" 
+                                         height="120" 
+                                         alt="1st Place">
+                                </div>
+                                <h4 class="card-title mb-1" data-name></h4>
+                                <p class="text-muted mb-3" data-role></p>
+                                <div class="d-flex justify-content-around">
+                                    <div>
+                                        <h5 class="mb-0" data-points></h5>
+                                        <small class="text-muted">Points 200</small>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0" data-recycled></h5>
+                                        <small class="text-muted">kg 20</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3rd Place -->
+                    <div class="col-md-3">
+                        <div class="card text-center h-100">
+                            <div class="card-body">
+                                <div class="position-relative d-inline-block mb-3">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/14458/14458257.png" 
+                                         class="position-absolute top-0 end-0" 
+                                         width="32" 
+                                         alt="Bronze Medal">
+                                    <img data-photo
+                                         src="https://resizing.flixster.com/6sQqdl7XVo8yZp1Na4qCMe903EQ=/fit-in/128x128/v2/https://resizing.flixster.com/5qjEbcGT1-ZagBQF-Qg3JUcKDrE=/128x128/v1.YzsxMDAwMDAzMjEwO2o7MjA0Mzk7MjA0ODs5NjA7OTYw" 
+                                         class="rounded-circle" 
+                                         width="100" 
+                                         height="100" 
+                                         alt="3rd Place">
+                                </div>
+                                <h5 class="card-title mb-1" data-name></h5>
+                                <p class="text-muted mb-3" data-role></p>
+                                <div class="d-flex justify-content-around">
+                                    <div>
+                                        <h6 class="mb-0" data-points></h6>
+                                        <small class="text-muted">Points 150</small>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0" data-recycled></h6>
+                                        <small class="text-muted">kg10</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rankings Table -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>User</th>
+                                        <th>Role</th>
+                                        <th>
+                                            <button class="btn btn-link p-0" data-sort="points">
+                                                Points
+                                                <i class="bi bi-arrow-down-up"></i>
+                                            </button>
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-link p-0" data-sort="recycled">
+                                                Recycled (kg)
+                                                <i class="bi bi-arrow-down-up"></i>
+                                            </button>
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-link p-0" data-sort="transactions">
+                                                Transactions
+                                                <i class="bi bi-arrow-down-up"></i>
+                                            </button>
+                                        </th>
+                                        <th>Level</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-rankings>
+                                    <!-- Rankings will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Rankings pagination">
+                            <ul class="pagination justify-content-center mb-0">
+                                <li class="page-item disabled" data-page-prev>
+                                    <button class="page-link">Previous</button>
+                                </li>
+                                <li class="page-item active">
+                                    <button class="page-link">1</button>
+                                </li>
+                                <li class="page-item">
+                                    <button class="page-link">2</button>
+                                </li>
+                                <li class="page-item">
+                                    <button class="page-link">3</button>
+                                </li>
+                                <li class="page-item" data-page-next>
+                                    <button class="page-link">Next</button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Impact -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Community Impact</h5>
+                        <div class="row g-4">
+                            <!-- Environmental Impact -->
+                            <div class="col-md-6">
+                                <h6 class="mb-3">Environmental Impact</h6>
+                                <div class="progress mb-3" style="height: 25px;">
+                                    <div class="progress-bar bg-success" 
+                                         role="progressbar" 
+                                         style="width: 75%;" 
+                                         data-co2-saved>
+                                        75% CO₂ Saved
+                                    </div>
+                                </div>
+                                <div class="progress mb-3" style="height: 25px;">
+                                    <div class="progress-bar bg-info" 
+                                         role="progressbar" 
+                                         style="width: 60%;" 
+                                         data-water-saved>
+                                        60% Water Saved
+                                    </div>
+                                </div>
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar bg-warning" 
+                                         role="progressbar" 
+                                         style="width: 45%;" 
+                                         data-energy-saved>
+                                        45% Energy Saved
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Material Categories -->
+                            <div class="col-md-6">
+                                <h6 class="mb-3">Top Recycled Materials</h6>
+                                <div class="chart-container">
+                                    <canvas id="materialsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="position-fixed top-50 start-50 translate-middle d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- App Logic -->
+    <script type="module">
+        import app from '/assets/js/app.js';
+        import { getCurrentUser, logout } from '/assets/js/auth.js';
+        import { 
+            getLeaderboardData, 
+            getTopUsers,
+            getCommunityStats 
+        } from '/assets/js/db.js';
+
+        // Make logout function available globally
+        window.logout = logout;
+
+        let currentPeriod = 'all-time';
+        let currentSort = 'points';
+        let currentPage = 1;
+        let materialsChart;
+
+        // Helper functions
+        function showLoading() {
+            document.getElementById('loading-spinner').classList.remove('d-none');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-spinner').classList.add('d-none');
+        }
+
+        function showError(message) {
+            alert(message);
+        }
+
+        // Initialize page
+        async function init() {
+            try {
+                showLoading();
+
+                // Load statistics
+                const stats = await getCommunityStats();
+                updateStatistics(stats);
+
+                // Load top 3 users
+                const topUsers = await getTopUsers(3, currentPeriod);
+                updateTopThree(topUsers);
+
+                // Load leaderboard data
+                await loadLeaderboard();
+
+                // Initialize materials chart
+                initializeMaterialsChart(stats.materials);
+
+                // Set up event handlers
+                setupEventHandlers();
+
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                showError('Failed to load leaderboard data');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Update statistics
+        function updateStatistics(stats) {
+            document.querySelector('[data-total-users]').textContent = stats.totalUsers;
+            document.querySelector('[data-total-recycled]').textContent = 
+                `${stats.totalRecycled.toLocaleString()} kg`;
+            document.querySelector('[data-total-transactions]').textContent = 
+                stats.totalTransactions.toLocaleString();
+
+            // Update environmental impact
+            document.querySelector('[data-co2-saved]').style.width = 
+                `${stats.co2Saved}%`;
+            document.querySelector('[data-water-saved]').style.width = 
+                `${stats.waterSaved}%`;
+            document.querySelector('[data-energy-saved]').style.width = 
+                `${stats.energySaved}%`;
+        }
+
+        // Update top three users
+        function updateTopThree(users) {
+            const containers = document.querySelector('[data-top-three]')
+                                    .children;
+
+            [1, 0, 2].forEach((index, i) => {
+                const user = users[index];
+                const container = containers[i];
+
+                if (user) {
+                    container.querySelector('[data-photo]').src = 
+                        user.photoURL || '/assets/img/default-avatar.png';
+                    container.querySelector('[data-name]').textContent = user.name;
+                    container.querySelector('[data-role]').textContent = user.role;
+                    container.querySelector('[data-points]').textContent = 
+                        user.points.toLocaleString();
+                    container.querySelector('[data-recycled]').textContent = 
+                        user.recycled.toLocaleString();
+                }
+            });
+        }
+
+        // Load leaderboard data
+        async function loadLeaderboard() {
+            const data = await getLeaderboardData({
+                period: currentPeriod,
+                sort: currentSort,
+                page: currentPage,
+                limit: 10
+            });
+
+            const tbody = document.querySelector('[data-rankings]');
+            tbody.innerHTML = '';
+
+            data.users.forEach((user, index) => {
+                const rank = (currentPage - 1) * 10 + index + 1;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <span class="badge bg-primary rounded-pill">
+                            ${rank}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="${user.photoURL || 'https://static.vecteezy.com/system/resources/thumbnails/025/869/629/small/round-profile-image-of-man-avatar-for-social-networks-fashion-beauty-blue-and-black-bright-illustration-in-trendy-style-vector.jpg'}" 
+                                 class="rounded-circle me-2" 
+                                 width="32" 
+                                 height="32" 
+                                 alt="${user.name}">
+                            <a href="/profile.html?uid=${user.id}">
+                                ${user.name}
+                            </a>
+                        </div>
+                    </td>
+                    <td>${user.role}</td>
+                    <td>${user.points.toLocaleString()}</td>
+                    <td>${user.recycled.toLocaleString()}</td>
+                    <td>${user.transactions.toLocaleString()}</td>
+                    <td>
+                        <span class="badge bg-${getLevelColor(user.level)}">
+                            ${user.level}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update pagination
+            updatePagination(data.total);
+        }
+
+        // Initialize materials chart
+        function initializeMaterialsChart(data) {
+            const ctx = document.getElementById('materialsChart').getContext('2d');
+            
+            materialsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: [
+                            '#4CAF50',
+                            '#66BB6A',
+                            '#81C784',
+                            '#A5D6A7',
+                            '#C8E6C9'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Get level color
+        function getLevelColor(level) {
+            switch (level.toLowerCase()) {
+                case 'bronze': return 'warning';
+                case 'silver': return 'secondary';
+                case 'gold': return 'primary';
+                case 'platinum': return 'info';
+                default: return 'secondary';
+            }
+        }
+
+        // Update pagination
+        function updatePagination(total) {
+            const totalPages = Math.ceil(total / 10);
+            const pagination = document.querySelector('.pagination');
+            const prevBtn = document.querySelector('[data-page-prev]');
+            const nextBtn = document.querySelector('[data-page-next]');
+
+            // Update prev/next buttons
+            prevBtn.classList.toggle('disabled', currentPage === 1);
+            nextBtn.classList.toggle('disabled', currentPage === totalPages);
+
+            // Update page numbers
+            const pages = pagination.querySelectorAll('.page-item:not([data-page-prev]):not([data-page-next])');
+            pages.forEach((page, index) => {
+                const pageNum = currentPage - 1 + index;
+                if (pageNum > 0 && pageNum <= totalPages) {
+                    page.style.display = '';
+                    page.querySelector('.page-link').textContent = pageNum;
+                    page.classList.toggle('active', pageNum === currentPage);
+                } else {
+                    page.style.display = 'none';
+                }
+            });
+        }
+
+        // Set up event handlers
+        function setupEventHandlers() {
+            // Period filter
+            document.querySelectorAll('[data-period]').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    currentPeriod = e.target.dataset.period;
+                    currentPage = 1;
+
+                    // Update button states
+                    document.querySelectorAll('[data-period]').forEach(btn => {
+                        btn.classList.toggle('active', btn === e.target);
+                    });
+
+                    try {
+                        showLoading();
+                        await loadLeaderboard();
+                    } catch (error) {
+                        console.error('Error updating period:', error);
+                        showError('Failed to update leaderboard');
+                    } finally {
+                        hideLoading();
+                    }
+                });
+            });
+
+            // Sorting
+            document.querySelectorAll('[data-sort]').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    currentSort = e.target.closest('[data-sort]').dataset.sort;
+                    currentPage = 1;
+
+                    try {
+                        showLoading();
+                        await loadLeaderboard();
+                    } catch (error) {
+                        console.error('Error updating sort:', error);
+                        showError('Failed to update leaderboard');
+                    } finally {
+                        hideLoading();
+                    }
+                });
+            });
+
+            // Pagination
+            document.querySelector('[data-page-prev]').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadLeaderboard();
+                }
+            });
+
+            document.querySelector('[data-page-next]').addEventListener('click', () => {
+                currentPage++;
+                loadLeaderboard();
+            });
+
+            // Search
+            let searchTimeout;
+            document.querySelector('[data-search-input]').addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    currentPage = 1;
+                    loadLeaderboard(e.target.value);
+                }, 500);
+            });
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
